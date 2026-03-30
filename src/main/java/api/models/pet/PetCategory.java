@@ -33,5 +33,17 @@ public class PetCategory {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PetCategory)) return false;
+        PetCategory that = (PetCategory) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

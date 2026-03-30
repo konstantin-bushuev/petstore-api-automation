@@ -3,8 +3,6 @@ package api.clients.pet;
 import api.models.pet.Pet;
 import api.models.pet.PetStatus;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-
 import static api.spec.RequestSpecs.baseSpec;
 import static io.restassured.RestAssured.given;
 
@@ -44,5 +42,13 @@ public class PetClient {
                 .pathParam("petId", id)
                 .when()
                 .delete(PET_BY_ID);
+    }
+
+    public Response findPetsByStatus(PetStatus status) {
+        return given()
+                .spec(baseSpec)
+                .queryParam("status", status.toString())
+                .when()
+                .get(PET_BY_STATUS);
     }
 }
