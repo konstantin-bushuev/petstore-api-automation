@@ -1,13 +1,13 @@
 package tests.pet;
 
-import api.clients.pet.PetClient;
+import api.clients.PetClient;
 import api.models.pet.Pet;
 import api.models.pet.PetStatus;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import testdata.PetFactory;
+import testdata.pet.PetFactory;
 import tests.BaseTest;
 
 import java.util.ArrayList;

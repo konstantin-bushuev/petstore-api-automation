@@ -1,4 +1,4 @@
-package testdata;
+package testdata.pet;
 
 import api.models.pet.*;
 import net.datafaker.Faker;

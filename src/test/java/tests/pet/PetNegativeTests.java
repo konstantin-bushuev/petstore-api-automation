@@ -1,20 +1,19 @@
 package tests.pet;
 
-import api.clients.pet.PetClient;
+import api.clients.PetClient;
 import api.models.pet.Pet;
-import api.utils.RequestHelper;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import testdata.PetFactory;
+import testdata.pet.PetFactory;
 import tests.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static api.spec.ResponseSpecs.*;
-import static testdata.PetNegativeData.*;
+import static testdata.pet.PetNegativeData.*;
 
 public class PetNegativeTests extends BaseTest {
 
@@ -35,7 +34,7 @@ public class PetNegativeTests extends BaseTest {
     // Передан запрос без тела >> ошибка валидации >> ожидается 400 или 405
     @Test
     public void createPet_withoutBody() {
-        RequestHelper.post("/pet", null, ContentType.JSON)
+        petClient.createPetRaw(null, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -43,7 +42,7 @@ public class PetNegativeTests extends BaseTest {
     // Передан пустой JSON >> ошибка валидации >> ожидается 400 или 405
     @Test
     public void createPet_withEmptyBody() {
-        RequestHelper.post("/pet", "", ContentType.JSON)
+        petClient.createPetRaw("", ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -51,7 +50,7 @@ public class PetNegativeTests extends BaseTest {
     // Передан некорректный JSON >> ошибка парсинга >> ожидается 400 или 405
     @Test
     public void createPet_withBadJsonBody() {
-        RequestHelper.post("/pet", BAD_JSON, ContentType.JSON)
+        petClient.createPetRaw(BAD_JSON, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -59,7 +58,7 @@ public class PetNegativeTests extends BaseTest {
     // Отсутствуют обязательные поля >> ошибка валидации >> ожидается 400 или 405
     @Test
     public void createPet_withEmptyJsonBody() {
-        RequestHelper.post("/pet", "{}", ContentType.JSON)
+        petClient.createPetRaw("{}", ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -67,7 +66,7 @@ public class PetNegativeTests extends BaseTest {
     // Неверный Content-Type >> неподдерживаемый формат >> ожидается 405 или 415
     @Test
     public void createPet_notJsonContentType() {
-        RequestHelper.post("/pet", VALID_JSON, ContentType.TEXT)
+        petClient.createPetRaw(VALID_JSON, ContentType.TEXT)
                 .then()
                 .spec(contentTypeMismatchResponse);
     }
@@ -97,7 +96,7 @@ public class PetNegativeTests extends BaseTest {
     // Нарушена структура JSON >> ошибка валидации структуры >> ожидается 400 или 405
     @Test
     public void createPet_withStringPhotoUrls() {
-        RequestHelper.post("/pet", BAD_STRUCTURE_JSON, ContentType.JSON)
+        petClient.createPetRaw(BAD_STRUCTURE_JSON, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -111,11 +110,11 @@ public class PetNegativeTests extends BaseTest {
         createdPetIds.add(id);
         pet.setId(id);
 
-        Pet dublicatePet = PetFactory.randomPetFullData()
+        Pet duplicatePet = PetFactory.randomPetFullData()
                 .setId(id);
 
         petClient
-                .createPet(dublicatePet)
+                .createPet(duplicatePet)
                 .then()
                 .spec(duplicateIdResponse);
     }
@@ -125,7 +124,7 @@ public class PetNegativeTests extends BaseTest {
     // Отсутствует id в URL >> некорректный endpoint >> ожидается 400 или 405
     @Test
     public void getPetById_withoutId() {
-        RequestHelper.get("/pet", ContentType.JSON)
+        petClient.getPetByIdRaw(null, ContentType.JSON)
                 .then()
                 .spec(missingIdOrWrongPathResponse);
     }
@@ -142,7 +141,7 @@ public class PetNegativeTests extends BaseTest {
     // Невалидный id (строка вместо числа) >> ошибка формата >> ожидается 400 или 404
     @Test
     public void getPetById_invalidIdString() {
-        RequestHelper.getWithPathParam("/pet/{petId}", "petId", INVALID_ID, ContentType.JSON)
+        petClient.getPetByIdRaw(INVALID_ID, ContentType.JSON)
                 .then()
                 .spec(invalidIdResponse);
     }
@@ -173,7 +172,7 @@ public class PetNegativeTests extends BaseTest {
     // Невалидный id (строка вместо числа) >> ошибка формата >> ожидается 400 или 404
     @Test
     public void updatePet_invalidId() {
-        RequestHelper.put("/pet", VALID_JSON_INVALID_ID, ContentType.JSON)
+        petClient.updatePetRaw(VALID_JSON_INVALID_ID, ContentType.JSON)
                 .then()
                 .spec(badRequestResponse);
     }
@@ -181,7 +180,7 @@ public class PetNegativeTests extends BaseTest {
     // Передан запрос без тела >> ошибка валидации >> ожидается 400 или 405
     @Test
     public void updatePet_withoutBody() {
-        RequestHelper.put("/pet", null, ContentType.JSON)
+        petClient.updatePetRaw(null, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -189,7 +188,7 @@ public class PetNegativeTests extends BaseTest {
     // Передан пустой JSON >> ошибка валидации >> ожидается 400 или 405
     @Test
     public void updatePet_withEmptyBody() {
-        RequestHelper.put("/pet", "", ContentType.JSON)
+        petClient.updatePetRaw("", ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -197,7 +196,7 @@ public class PetNegativeTests extends BaseTest {
     // Некорректный JSON >> ошибка парсинга >> ожидается 400 или 405
     @Test
     public void updatePet_withBadStructureJsonBody() {
-        RequestHelper.put("/pet", BAD_JSON, ContentType.JSON)
+        petClient.updatePetRaw(BAD_JSON, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -205,7 +204,7 @@ public class PetNegativeTests extends BaseTest {
     // Нарушена структура JSON >> ошибка валидации структуры >> ожидается 400 или 405
     @Test
     public void updatePet_withStringPhotoUrls() {
-        RequestHelper.put("/pet", BAD_STRUCTURE_JSON, ContentType.JSON)
+        petClient.updatePetRaw(BAD_STRUCTURE_JSON, ContentType.JSON)
                 .then()
                 .spec(invalidBodyResponse);
     }
@@ -213,7 +212,7 @@ public class PetNegativeTests extends BaseTest {
     // Неверный Content-Type >> неподдерживаемый формат >> ожидается 405 или 415
     @Test
     public void updatePet_notJsonContentType() {
-        RequestHelper.put("/pet", VALID_JSON, ContentType.TEXT)
+        petClient.updatePetRaw(VALID_JSON, ContentType.TEXT)
                 .then()
                 .spec(contentTypeMismatchResponse);
     }
@@ -223,7 +222,7 @@ public class PetNegativeTests extends BaseTest {
     // Отсутствует id в URL >> некорректный endpoint >> ожидается 400 или 405
     @Test
     public void removePet_withoutId() {
-        RequestHelper.delete("/pet", null, null, ContentType.JSON)
+        petClient.removePetRaw(null, ContentType.JSON)
                 .then()
                 .spec(missingIdOrWrongPathResponse);
     }
@@ -240,7 +239,7 @@ public class PetNegativeTests extends BaseTest {
     // Невалидный id (строка вместо числа) >> ошибка формата >> ожидается 400 или 404
     @Test
     public void removePet_invalidId() {
-        RequestHelper.delete("/pet/{petId}", "petId", INVALID_ID, ContentType.JSON)
+        petClient.removePetRaw(INVALID_ID, ContentType.JSON)
                 .then()
                 .spec(invalidIdResponse);
     }

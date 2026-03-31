@@ -1,4 +1,4 @@
-package api.utils;
+package api.http;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

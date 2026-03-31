@@ -1,4 +1,4 @@
-package testdata;
+package testdata.pet;
 
 public class PetNegativeData {
     public static final String VALID_JSON = "{" +
