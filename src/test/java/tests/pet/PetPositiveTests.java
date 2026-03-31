@@ -1,17 +1,15 @@
-package tests;
+package tests.pet;
 
 import api.clients.pet.PetClient;
-import api.models.pet.Pet;
-import api.models.pet.PetStatus;
-import api.models.pet.PetTag;
+import api.models.pet.*;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import testdata.PetFactory;
+import tests.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +17,10 @@ import java.util.List;
 import static api.spec.ResponseSpecs.*;
 import static org.hamcrest.Matchers.*;
 
-public class PetTests extends BaseTest {
+public class PetPositiveTests extends BaseTest {
 
     private final PetClient petClient = new PetClient();
     private final List<Long> createdPetIds = new ArrayList<>();
-
 
     @AfterEach
     public void tearDown() {
@@ -66,7 +63,6 @@ public class PetTests extends BaseTest {
     }
 
 
-    //POSITIVE TESTS
     //CREATE
 
     @Test
@@ -232,7 +228,5 @@ public class PetTests extends BaseTest {
                 .body("size()", greaterThan(0))
                 .body("status", everyItem(equalTo(status.toString())));
     }
-
-
 
 }

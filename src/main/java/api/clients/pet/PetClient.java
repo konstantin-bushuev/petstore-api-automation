@@ -2,7 +2,11 @@ package api.clients.pet;
 
 import api.models.pet.Pet;
 import api.models.pet.PetStatus;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+
+import static api.config.RestConfig.BASE_URL;
 import static api.spec.RequestSpecs.baseSpec;
 import static io.restassured.RestAssured.given;
 
