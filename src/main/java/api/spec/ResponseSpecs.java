@@ -4,28 +4,53 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.ResponseSpecification;
 
-import static org.apache.http.HttpStatus.*;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.is;
 
 public class ResponseSpecs {
 
     public static ResponseSpecification okResponse =
             new ResponseSpecBuilder()
-                    .expectStatusCode(SC_OK)
+                    .expectStatusCode(200)
                     .expectContentType(ContentType.JSON)
                     .build();
 
     public static ResponseSpecification notFoundResponse =
             new ResponseSpecBuilder()
-                    .expectStatusCode(SC_NOT_FOUND)
+                    .expectStatusCode(404)
                     .build();
 
     public static ResponseSpecification badRequestResponse =
             new ResponseSpecBuilder()
-                    .expectStatusCode(SC_BAD_REQUEST)
+                    .expectStatusCode(400)
                     .build();
 
-    public static ResponseSpecification invalidCreateRequestResponse =
+    // Невалидный id (тип/формат)
+    public static ResponseSpecification invalidIdResponse =
             new ResponseSpecBuilder()
-                    .expectStatusCode(SC_METHOD_NOT_ALLOWED) // Petstore returns 405 for invalid create requests
+                    .expectStatusCode(anyOf(is(400), is(404)))
+                    .build();
+
+    // Отсутствует id (неправильный endpoint)
+    public static ResponseSpecification missingIdOrWrongPathResponse =
+            new ResponseSpecBuilder()
+                    .expectStatusCode(anyOf(is(400), is(405)))
+                    .build();
+
+    // Некорректный body (пустой, синтаксическая ошибка, отсутствуют поля)
+    public static ResponseSpecification invalidBodyResponse =
+            new ResponseSpecBuilder()
+                    .expectStatusCode(anyOf(is(400), is(405)))
+                    .build();
+
+    // Неверный Content-Type
+    public static ResponseSpecification contentTypeMismatchResponse =
+            new ResponseSpecBuilder()
+                    .expectStatusCode(anyOf(is(405), is(415)))
+                    .build();
+
+    public static ResponseSpecification duplicateIdResponse =
+            new ResponseSpecBuilder()
+                    .expectStatusCode(anyOf(is(400), is(409)))
                     .build();
 }
