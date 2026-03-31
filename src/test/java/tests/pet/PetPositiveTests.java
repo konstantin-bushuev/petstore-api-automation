@@ -1,6 +1,6 @@
 package tests.pet;
 
-import api.clients.pet.PetClient;
+import api.clients.PetClient;
 import api.models.pet.*;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import testdata.PetFactory;
+import testdata.pet.PetFactory;
 import tests.BaseTest;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class PetPositiveTests extends BaseTest {
     }
 
     // Сравниваем питомцев по полям
-    private void assertPetEquals(Pet expected, Pet actual) {
+    private void assertPetFieldsEquals(Pet expected, Pet actual) {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expected.getId(), actual.getId(), "id mismatch"),
                 () -> Assertions.assertEquals(expected.getName(), actual.getName(), "name mismatch"),
@@ -89,11 +89,11 @@ public class PetPositiveTests extends BaseTest {
         pet.setId(id);
 
         // Проверка соответствия данных в ответе
-        assertPetEquals(pet, responsePet);
+        assertPetFieldsEquals(pet, responsePet);
 
         // Проверка сохранённых данных: получаем питомца через API и сравниваем
         Pet getPet = extractPet(petClient.getPetById(id));
-        assertPetEquals(pet, getPet);
+        assertPetFieldsEquals(pet, getPet);
     }
 
     @Test
@@ -120,11 +120,11 @@ public class PetPositiveTests extends BaseTest {
         pet.setId(id);
 
         // Проверка соответствия данных в ответе
-        assertPetEquals(pet, responsePet);
+        assertPetFieldsEquals(pet, responsePet);
 
         // Проверка сохранённых данных: получаем питомца через API и сравниваем
         Pet getPet = extractPet(petClient.getPetById(id));
-        assertPetEquals(pet, getPet);
+        assertPetFieldsEquals(pet, getPet);
     }
 
     //GET
@@ -148,7 +148,7 @@ public class PetPositiveTests extends BaseTest {
 
         // Проверка соответствия данных в ответе: извлекаем питомца из ответа и сравниваем с исходным
         Pet responsePet = extractPet(response);
-        assertPetEquals(pet, responsePet);
+        assertPetFieldsEquals(pet, responsePet);
     }
 
     //UPDATE
@@ -175,11 +175,11 @@ public class PetPositiveTests extends BaseTest {
 
         // Проверка соответствия данных в ответе: извлекаем объект питомца из ответа и сравниваем с обновлённым
         Pet responsePet = extractPet(response);
-        assertPetEquals(updatePet, responsePet);
+        assertPetFieldsEquals(updatePet, responsePet);
 
         // Проверка сохранённых данных: получаем питомца через API и сравниваем
         Pet getPet = extractPet(petClient.getPetById(id));
-        assertPetEquals(updatePet, getPet);
+        assertPetFieldsEquals(updatePet, getPet);
     }
 
     //REMOVE

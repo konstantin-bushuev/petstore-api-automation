@@ -2,9 +2,7 @@ package tests;
 
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.config.LogConfig;
 import org.junit.jupiter.api.BeforeAll;
 
 public class BaseTest {
@@ -20,9 +18,8 @@ public class BaseTest {
                                 .setParam("http.connection-manager.timeout", 5000)
                 );
 
-        RestAssured.filters(
-                new RequestLoggingFilter(LogDetail.ALL),
-                new ResponseLoggingFilter(LogDetail.ALL)
-        );
+        RestAssured.config = RestAssured
+                .config()
+                .logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
     }
 }
