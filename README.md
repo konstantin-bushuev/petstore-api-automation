@@ -129,7 +129,7 @@ src
                 .body("id", greaterThan(0L));
 
         // ASSERT: Проверка содержания ответа
-        Pet createdPet = extractPet(response); // централизованная десериализация ответа API в объект Pet
+        Pet createdPet = extractPet(response); // десериализация ответа API в объект Pet
         pet.setId(createdPet.getId());
         assertPetFieldsEquals(pet, createdPet); // сравнение всех полей объектов
 
