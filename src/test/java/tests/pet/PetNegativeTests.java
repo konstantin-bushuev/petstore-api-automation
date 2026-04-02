@@ -14,7 +14,7 @@ import tests.BaseTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static api.spec.ResponseSpecs.*;
+import static api.spec.PetResponseSpecs.*;
 import static testdata.pet.PetNegativeData.*;
 
 public class PetNegativeTests extends BaseTest {
@@ -59,7 +59,6 @@ public class PetNegativeTests extends BaseTest {
                 .spec(invalidBodyResponse);
     }
 
-    // Отсутствуют обязательные поля >> ошибка валидации >> ожидается 400 или 405
     @Test
     @DisplayName("Создание питомца с отсутствующими обязательными полями >> ошибка валидации >> ожидается 400 или 405")
     public void createPet_withEmptyJsonBody() {
@@ -76,7 +75,6 @@ public class PetNegativeTests extends BaseTest {
                 .spec(contentTypeMismatchResponse);
     }
 
-    // Отсутствует обязательное поле name >> ошибка валидации >> ожидается 400 или 405
     @Test
     @DisplayName("Создание питомца без обязательного поля name >> ошибка валидации >> ожидается 400 или 405")
     public void createPet_withoutName() {

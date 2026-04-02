@@ -7,7 +7,7 @@ import io.restassured.specification.ResponseSpecification;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 
-public class ResponseSpecs {
+public class PetResponseSpecs {
 
     public static ResponseSpecification okResponse =
             new ResponseSpecBuilder()
@@ -49,6 +49,7 @@ public class ResponseSpecs {
                     .expectStatusCode(anyOf(is(405), is(415)))
                     .build();
 
+    // Дублирование id
     public static ResponseSpecification duplicateIdResponse =
             new ResponseSpecBuilder()
                     .expectStatusCode(anyOf(is(400), is(409)))

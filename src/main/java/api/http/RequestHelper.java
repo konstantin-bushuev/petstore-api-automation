@@ -36,7 +36,7 @@ public class RequestHelper {
 
     public static Response getWithPathParam(String path, String paramName, Object value, ContentType contentType) {
         RequestSpecification request = prepareRequest(contentType);
-        if (paramName != null) {
+        if (paramName != null && value != null) {
             request.pathParam(paramName, value);
         }
         return request
@@ -46,7 +46,7 @@ public class RequestHelper {
 
     public static Response getWithQueryParam(String path, String paramName, Object value, ContentType contentType) {
         RequestSpecification request = prepareRequest(contentType);
-        if (paramName != null) {
+        if (paramName != null && value != null) {
             request.queryParam(paramName, value);
         }
         return request
@@ -66,7 +66,7 @@ public class RequestHelper {
 
     public static Response delete(String path, String paramName, Object value, ContentType contentType) {
         RequestSpecification request = prepareRequest(contentType);
-        if (paramName != null) {
+        if (paramName != null && value != null) {
             request.pathParam(paramName, value);
         }
         return request

@@ -18,8 +18,8 @@ public class BaseTest {
                                 .setParam("http.connection-manager.timeout", 5000)
                 );
 
-//        RestAssured.config = RestAssured
-//                .config()
-//                .logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
+        RestAssured.config = RestAssured
+                .config()
+                .logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
     }
 }

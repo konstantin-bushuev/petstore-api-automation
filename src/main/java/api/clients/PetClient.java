@@ -72,7 +72,14 @@ public class PetClient {
     // Получение питомца по id (raw)
     @Step("get запрос - получение питомца по id (raw)")
     public Response getPetByIdRaw(Object petId, ContentType contentType) {
-        return RequestHelper.getWithPathParam(PET_BY_ID, "petId", petId, contentType);
+        String path;
+        if (petId != null) {
+            path = PET_BY_ID;
+        } else {
+            path = PET_PATH;
+        }
+
+        return RequestHelper.getWithPathParam(path, "petId", petId, contentType);
     }
 
     // Обновление питомца с произвольным телом
@@ -84,7 +91,14 @@ public class PetClient {
     // Удаление питомца по id (raw)
     @Step("delete запрос - удаление питомца (raw)")
     public Response removePetRaw(Object petId, ContentType contentType) {
-        return RequestHelper.delete(PET_BY_ID, "petId", petId, contentType);
+        String path;
+        if (petId != null) {
+            path = PET_BY_ID;
+        } else {
+            path = PET_PATH;
+        }
+
+        return RequestHelper.delete(path, "petId", petId, contentType);
     }
 
     // Поиск питомцев по статусу (raw)

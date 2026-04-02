@@ -16,7 +16,7 @@ import tests.BaseTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static api.spec.ResponseSpecs.*;
+import static api.spec.PetResponseSpecs.*;
 import static org.hamcrest.Matchers.*;
 
 public class PetPositiveTests extends BaseTest {
